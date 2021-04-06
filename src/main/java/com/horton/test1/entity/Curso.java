@@ -1,9 +1,8 @@
 package com.horton.test1.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 public class Curso {
@@ -11,8 +10,11 @@ public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Descripcion es requerida")
     private String descripcion;
     private String tipo;
+    @OneToMany(mappedBy = "curso")
+    private List<Participante> participantes;
 
     public Long getId() {
         return id;
@@ -38,12 +40,21 @@ public class Curso {
         this.tipo = tipo;
     }
 
+    public List<Participante> getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(List<Participante> participantes) {
+        this.participantes = participantes;
+    }
+
     @Override
     public String toString() {
         return "Curso{" +
                 "id=" + id +
                 ", descripcion='" + descripcion + '\'' +
                 ", tipo='" + tipo + '\'' +
+                ", participantes=" + participantes +
                 '}';
     }
 }
